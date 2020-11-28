@@ -1,1 +1,1 @@
-# INSTALLATION_terminal-setting
+# Automatic-Insatllation_terminal-setting
