@@ -26,7 +26,7 @@ for key value in ${(kv)Application_dict[*]}; do
         Ask_install $value
         result=$? # get Ask_install() return value
         if [ $result = 1 ]; then
-            case $key in 
+            case $value in 
                 $Application_dict[code]) # install VScode
                     wget -qO- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > packages.microsoft.gpg
                     sudo install -o root -g root -m 644 packages.microsoft.gpg /etc/apt/trusted.gpg.d/
