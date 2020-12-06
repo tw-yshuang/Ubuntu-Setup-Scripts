@@ -21,8 +21,8 @@ declare -A Application_dict
 Application_dict=([code]="VScode" [google-chrome]="Chrome" [vlc]="VLC")
 
 for key value in ${(kv)Application_dict[*]}; do
-    app_root="$(which $key)" # get application root
-    if [ "$app_root" = "$key not found" ]; then
+    app_root="$(command -v $key)" # get application root
+    if [ "$app_root" = "" ]; then
         Ask_install $value
         result=$? # get Ask_install() return value
         if [ $result = 1 ]; then
