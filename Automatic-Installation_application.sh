@@ -5,7 +5,7 @@ sudo apt upgrade
 function Ask_install(){
     printf "Do you wamt to install $1?[y/n]"
     read respond
-    if [ "$respond" = "y" -o "$respond" = "Y" ]; then
+    if [ "$respond" = "y" -o "$respond" = "Y" -o "$respond" = "" ]; then
         return 1
     elif [ "$respond" = "n" -o "$respond" = "N" ]; then
         return 0
@@ -41,7 +41,7 @@ for key value in ${(kv)Application_dict[*]}; do
                     sudo apt-get install -f
                     ;;
                 $Application_dict[vlc]) # install VLC
-                    sudo apt-get install vlc
+                    sudo apt-get install vlc -y
                     ;;
             esac
         fi
@@ -49,12 +49,3 @@ for key value in ${(kv)Application_dict[*]}; do
         echo "You are already installed $value before~"
     fi
 done
-
-# sudo apt-get autoremove
-
-# # install pyenv
-# sudo apt-get install -y make build-essential libssl-dev zlib1g-dev libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm
-# curl -L https://raw.githubusercontent.com/yyuu/pyenv-installer/master/bin/pyenv-installer | bash
-
-
-
