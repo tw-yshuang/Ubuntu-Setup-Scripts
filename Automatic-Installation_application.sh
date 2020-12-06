@@ -3,8 +3,7 @@ sudo apt update
 sudo apt upgrade
 
 function Ask_install(){
-    printf "Do you wamt to install $1?[y/n]"
-    read respond
+    printf "Do you wamt to install $1?[y/n]"; read respond
     if [ "$respond" = "y" -o "$respond" = "Y" -o "$respond" = "" ]; then
         return 1
     elif [ "$respond" = "n" -o "$respond" = "N" ]; then
@@ -23,8 +22,7 @@ Application_dict=([code]="VScode" [google-chrome]="Chrome" [vlc]="VLC")
 for key value in ${(kv)Application_dict[*]}; do
     app_root="$(command -v $key)" # get application root
     if [ "$app_root" = "" ]; then
-        Ask_install $value
-        result=$? # get Ask_install() return value
+        Ask_install $value; result=$? # get Ask_install() return value
         if [ $result = 1 ]; then
             case $value in 
                 $Application_dict[code]) # install VScode
