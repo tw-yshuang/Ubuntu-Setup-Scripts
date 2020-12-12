@@ -1,20 +1,73 @@
-#!/bin/zsh
-sudo apt update
-sudo apt upgrade
+#!/usr/zsh
+#>                           +-----------------------------------------+
+#>                           |  Automatic-Installation_application.sh  |
+#>                           +-----------------------------------------+
+#- SYNOPSIS
+#-
+#-    Automatic-Installation_application.sh [-h]
+#-
+#- OPTIONS
+#-
+#-    -y,                    all accept.
+#-    -h, --help             print help information.
+#-
+#- EXAMPLES
+#-
+#-    $ ./Automatic-Installation_application.sh -y
 
-function Ask_install(){
-    printf "Do you wamt to install $1?[y/n]"; read respond
+
+# Print script help
+function show_script_help(){
+    echo 
+    head -15 $0 | grep -e "^#[-|>]" | sed -e "s/^#[-|>]*/ /g"
+    echo 
+}
+# Receive arguments in slient mode.
+all_accept=0
+if [ "$#" -gt 0 ]; then
+    while [ "$#" -gt 0 ]; do
+        case "$1" in
+            # Help
+            "-h"|"--help")
+                show_script_help
+                exit 1
+            ;;
+            # All Accept
+            "-y")
+                all_accept=1
+                shift 1
+            ;;
+        esac
+    done
+fi
+
+if [ "$1" = "-y" ]; then
+    all_accept=1
+else
+    all_accept=0
+fi
+
+function Ask_yn(){
+    printf "$1 [y/n]" 
+    if [ $all_accept = 1 ]; then
+        printf "-y"
+        return 1
+    fi
+    read respond
     if [ "$respond" = "y" -o "$respond" = "Y" -o "$respond" = "" ]; then
         return 1
     elif [ "$respond" = "n" -o "$respond" = "N" ]; then
         return 0
     else
         echo 'wrong command!!'
-        Ask_install $1
+        Ask_yn $1
         return $?
     fi
     unset respond
 }
+
+sudo apt update
+sudo apt upgrade
 
 declare -A Application_dict
 Application_dict=([code]="VScode" [google-chrome]="Chrome" [vlc]="VLC")
@@ -22,7 +75,7 @@ Application_dict=([code]="VScode" [google-chrome]="Chrome" [vlc]="VLC")
 for key value in ${(kv)Application_dict[*]}; do
     app_root="$(command -v $key)" # get application root
     if [ "$app_root" = "" ]; then
-        Ask_install $value; result=$? # get Ask_install() return value
+        Ask_install "Do you wamt to install $value"; result=$? # get Ask_install() return value
         if [ $result = 1 ]; then
             case $value in 
                 $Application_dict[code]) # install VScode

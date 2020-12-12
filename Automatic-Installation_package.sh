@@ -1,10 +1,21 @@
 #!/bin/zsh
-sudo apt  update
+sudo apt update
 sudo apt upgrade
 sudo apt install -y git-all vim curl
 
+
+if [ "$1" = "-y" ]; then
+    all_accept=1
+else
+    all_accept=0
+fi
+
 function Ask_yn(){
     printf "$1 [y/n]" 
+    if [ $all_accept = 1 ]; then
+        printf "-y"
+        return 1
+    fi
     read respond
     if [ "$respond" = "y" -o "$respond" = "Y" -o "$respond" = "" ]; then
         return 1
