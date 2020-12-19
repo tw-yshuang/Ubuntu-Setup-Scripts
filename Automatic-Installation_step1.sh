@@ -11,8 +11,9 @@ sudo git clone https://github.com/zsh-users/zsh-syntax-highlighting.git $ZSH_CUS
 echo "=======================================done==================================="
 
 # TODO: use sed to edit ~/.zshrc, ~/.p10k.zsh
-sed -ie 's/ZSH_THEME=*/ZSH_THEME="powerlevel10k/powerlevel10k"/' -ie 's/^plugins/plugins=(git zsh-autosuggestions zsh-syntax-highlighting)/' ~/.zshrc
-printf "# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.\n[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh" >> ~/.zshrc
+sed -i 's!^ZSH_THEME=.*!ZSH_THEME="powerlevel10k/powerlevel10k"!' ~/.zshrc
+sed -i 's/^plugins.*/plugins=(git zsh-autosuggestions zsh-syntax-highlighting)/' ~/.zshrc
+printf "%b" "\n\n# To customize prompt, run 'p10k configure' or edit ~/.p10k.zsh.\n[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh" >> ~/.zshrc
 
 
 # terminal theme setting
@@ -21,11 +22,12 @@ fc-cache -f -v
 dconf load /org/gnome/terminal/ < gnome_terminal_settings_backup.txt
 
 
-# remove command
-sudo apt remove zsh -y
-sudo apt autoremove
-sudo rm -rf /home/ys_huang/.oh-my-zsh
-sudo rm -rf ~/.zsh*
-sudo rm -rf /themes/powerlevel10k
-sudo rm -rf /plugins/zsh-autosuggestions
-sudo rm -rf /plugins/zsh-syntax-highlighting
+# # remove command
+# sudo apt remove zsh -y
+# sudo apt autoremove
+# echo y
+# sudo rm -rf /home/ys_huang/.oh-my-zsh
+# sudo rm -rf ~/.zsh*
+# sudo rm -rf /themes/powerlevel10k
+# sudo rm -rf /plugins/zsh-autosuggestions
+# sudo rm -rf /plugins/zsh-syntax-highlighting
