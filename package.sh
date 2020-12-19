@@ -49,7 +49,7 @@ fi
 function Ask_yn(){
     printf "$1 [y/n]" 
     if [ $all_accept = 1 ]; then
-        printf "-y"
+        printf "-y\n"
         return 1
     fi
     read respond
@@ -87,10 +87,10 @@ if [ $result = 1 ]; then
     git config --global core.editor vim
 fi
 
-#git: add command "git lg"
+# git: add command "git lg"
 Ask_yn "Do you want add command: 'git lg'?"; result=$?
 if [ $result = 1 ]; then
-    FILE_PATH="$HOME/ubuntu_costomer_setting/Automatic-Installation_terminal-setting/14.txt"
+    FILE_PATH=~/.gitconfig
     Keyword="[alias]"
     CUS_Command='lg = !"git lg2"'
 

@@ -1,0 +1,54 @@
+[legacy/profiles:]
+default='b1dcc9dd-5262-4d8d-a863-c897e6d979b9'
+list=['b1dcc9dd-5262-4d8d-a863-c897e6d979b9', '59f7ef31-bb12-4020-aa11-d167bb446694']
+
+[legacy/profiles:/:59f7ef31-bb12-4020-aa11-d167bb446694]
+background-color='rgb(22,40,22)'
+background-transparency-percent=5
+bold-color='rgb(8,143,166)'
+bold-color-same-as-fg=false
+bold-is-bright=true
+cell-height-scale=1.05
+cell-width-scale=1.0
+cursor-background-color='rgb(204,255,219)'
+cursor-colors-set=true
+cursor-foreground-color='rgb(25,21,21)'
+default-size-columns=147
+default-size-rows=22
+font='SauceCodePro Nerd Font Medium 12.5'
+foreground-color='rgb(255,255,255)'
+highlight-background-color='rgb(255,90,48)'
+highlight-colors-set=true
+highlight-foreground-color='rgb(255,168,168)'
+palette=['rgb(60,60,62)', 'rgb(204,0,0)', 'rgb(78,154,6)', 'rgb(196,160,0)', 'rgb(52,101,164)', 'rgb(117,80,123)', 'rgb(6,152,154)', 'rgb(211,215,207)', 'rgb(105,105,105)', 'rgb(239,41,41)', 'rgb(138,226,52)', 'rgb(252,233,79)', 'rgb(114,159,207)', 'rgb(173,127,168)', 'rgb(52,226,226)', 'rgb(238,238,236)']
+use-system-font=false
+use-theme-colors=false
+use-theme-transparency=false
+use-transparent-background=true
+visible-name='shun_20'
+
+[legacy/profiles:/:b1dcc9dd-5262-4d8d-a863-c897e6d979b9]
+audible-bell=true
+background-color='rgb(22,40,22)'
+background-transparency-percent=5
+bold-color='rgb(8,143,166)'
+bold-color-same-as-fg=false
+bold-is-bright=true
+cell-height-scale=1.05
+cell-width-scale=1.0
+cursor-background-color='rgb(244,249,246)'
+cursor-colors-set=true
+cursor-foreground-color='rgb(25,21,21)'
+default-size-columns=147
+default-size-rows=22
+font='SauceCodePro Nerd Font Medium 12.5'
+foreground-color='rgb(255,255,255)'
+highlight-background-color='rgb(221,218,217)'
+highlight-colors-set=true
+highlight-foreground-color='rgb(64,89,233)'
+palette=['rgb(60,60,62)', 'rgb(204,0,0)', 'rgb(78,154,6)', 'rgb(196,160,0)', 'rgb(52,101,164)', 'rgb(117,80,123)', 'rgb(6,152,154)', 'rgb(211,215,207)', 'rgb(105,105,105)', 'rgb(239,41,41)', 'rgb(138,226,52)', 'rgb(252,233,79)', 'rgb(114,159,207)', 'rgb(173,127,168)', 'rgb(52,226,226)', 'rgb(238,238,236)']
+use-system-font=false
+use-theme-colors=false
+use-theme-transparency=false
+use-transparent-background=true
+visible-name='type1'

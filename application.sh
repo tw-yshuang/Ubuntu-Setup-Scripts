@@ -49,7 +49,7 @@ fi
 function Ask_yn(){
     printf "$1 [y/n]" 
     if [ $all_accept = 1 ]; then
-        printf "-y"
+        printf "-y\n"
         return 1
     fi
     read respond
@@ -77,10 +77,10 @@ Application_dict=([code]="VScode" [google-chrome]="Chrome" [vlc]="VLC")
 for key in ${!Application_dict[*]}; do
     app_root="$(command -v $key)" # get application root
     if [ "$app_root" = "" ]; then
-        Ask_install "Do you wamt to install ${Application_dict[$key]}"; result=$? # get Ask_install() return {Application_dict[$key]}
+        Ask_yn "Do you wamt to install ${Application_dict[$key]}?"; result=$? # get Ask_yn() return {Application_dict[$key]}
         if [ $result = 1 ]; then
             case ${Application_dict[$key]} in 
-                $Application_dict[code]) # install VScode
+                ${Application_dict[code]}) # install VScode
                     wget -qO- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > packages.microsoft.gpg
                     sudo install -o root -g root -m 644 packages.microsoft.gpg /etc/apt/trusted.gpg.d/
                     sudo sh -c 'echo "deb [arch=amd64 signed-by=/etc/apt/trusted.gpg.d/packages.microsoft.gpg] https://packages.microsoft.com/repos/vscode stable main" > /etc/apt/sources.list.d/vscode.list'
@@ -88,12 +88,12 @@ for key in ${!Application_dict[*]}; do
                     sudo apt-get update
                     sudo apt-get install code -y
                     ;;
-                $Application_dict[google-chrome]) # install Chrome
+                ${Application_dict[google-chrome]}) # install Chrome
                     wget -c https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
                     sudo dpkg -i google-chrome-stable_current_amd64.deb
                     sudo apt-get install -f
                     ;;
-                $Application_dict[vlc]) # install VLC
+                ${Application_dict[vlc]}) # install VLC
                     sudo apt-get install vlc -y
                     ;;
             esac
