@@ -109,11 +109,13 @@ if [ $result = 1 ]; then
     }
 
     if [ -f $FILE_PATH ]; then
-        if grep -Fn $Keyword $FILE_PATH; then
-            if grep -Fn $(Merge_SRC 0) $FILE_PATH; then
+        if grep -Fn "$Keyword" $FILE_PATH; then
+            SRC=$(Merge_SRC 1)
+            if grep -n "^lg*=*" $FILE_PATH; then
                 echo "You have already added 'git lg' in $FILE_PATH !!"
             else
-                sed -i "/$Keyword/a $(Merge_SRC 1)" $FILE_PATH
+                printf "%b" "$SRC"
+                sed -i "/$Keyword/a $SRC" $FILE_PATH
             fi
         else
             printf "%b" "\n$(Merge_SRC 0)" >> $FILE_PATH

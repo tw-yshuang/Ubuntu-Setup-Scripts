@@ -68,12 +68,10 @@ function Ask_yn(){
 #====================================================
 # Part 2. Main
 #====================================================
-Keyword='
-# pyenv setting
+Keyword='# pyenv setting
 PATH="$HOME/.pyenv/bin:$PATH"
 eval "$(pyenv init -)"
-eval "$(pyenv virtualenv-init -)"
-'
+eval "$(pyenv virtualenv-init -)"'
 case $SHELL in
     *zsh )
     shell=zsh
@@ -98,10 +96,10 @@ git clone https://github.com/pyenv/pyenv.git ~/.pyenv
 # config profile
 Ask_yn "Do you want automatic add pyenv config?"; result=$?
 if [ $result = 1 ]; then
-    if grep -Fn $Keyword $profile; then
+    if grep -Fn "$Keyword" $profile; then
         echo "You have already added pyenv config in $profile !!"
     else
-        printf $Keyword >> $profile
+        printf "\n$Keyword\n" >> $profile
     fi
     echo "Done!!"
     
