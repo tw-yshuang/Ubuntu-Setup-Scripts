@@ -4,3 +4,4 @@
 ./zsh_ohmyzsh_setup.sh
 ./terminal-theme_and_ohmyzsh-config.sh -y
 ./application.sh -y
+./pyenv_setup.sh -y
