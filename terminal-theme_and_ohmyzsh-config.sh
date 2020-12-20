@@ -80,7 +80,7 @@ for key in ${(k)Ohmyzsh_config_dict}; do
         if [ "$key" = "powerlevel10k" ]; then 
             sudo git clone ${Ohmyzsh_config_dict[$key]} $ZSH_CUSTOM/themes/$key
             sed -i 's!^ZSH_THEME=.*!ZSH_THEME="powerlevel10k/powerlevel10k"!' ~/.zshrc
-            printf "%b" "\n\n# To customize prompt, run 'p10k configure' or edit ~/.p10k.zsh.\n[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh" >> ~/.zshrc
+            printf "%b" "\n\n# To customize prompt, run 'p10k configure' or edit ~/.p10k.zsh.\n[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh\n" >> ~/.zshrc
         else
             sudo git clone ${Ohmyzsh_config_dict[$key]} $ZSH_CUSTOM/plugins/$key
             Ohmyzsh_config="$Ohmyzsh_config $key"
