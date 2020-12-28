@@ -73,16 +73,16 @@ sudo apt upgrade
 sudo apt install -y git-all vim curl
 
 # git: config global usr information
-Ask_yn "Do you want to config global user information?"; result=$?
+Ask_yn "Do you want to config git global user information?"; result=$?
 if [ $result = 1 ]; then
-    printf "Enter your global user name: "; read usr_name
-    printf "Enter your global user mail: "; read usr_mail
+    printf "Enter your git global user name: "; read usr_name
+    printf "Enter your git global user mail: "; read usr_mail
     git config --global user.name "$usr_name"
     git config --global user.email "$usr_mail"
 fi
 
 # git: config vim to the commit editor
-Ask_yn "Do you want use VIM to be your editor?"; result=$?
+Ask_yn "Do you want use VIM to be your git commitment editor?"; result=$?
 if [ $result = 1 ]; then
     git config --global core.editor vim
 fi

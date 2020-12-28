@@ -104,7 +104,7 @@ fi
 # terminal theme setting
 Ask_yn "Do you want to use custom terminal theme setting?"; result=$? # get Ask_ys() 
 if [ $result = 1 ]; then
-    cp ttf/*ttf ~/.local/share/fonts/
+    sudo cp ./ttf/*ttf ~/.local/share/fonts
     fc-cache -f -v 
     dconf load /org/gnome/terminal/ < ./config/gnome_terminal_settings_backup.txt
 fi

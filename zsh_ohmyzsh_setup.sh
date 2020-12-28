@@ -4,5 +4,5 @@
 sudo apt install zsh -y
 chsh -s $(which zsh)
 
-# oh-my-zsh package install
+# oh-my-zsh package install, won't auto switch to the zsh.
 sh -c "$(wget -qO- https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
