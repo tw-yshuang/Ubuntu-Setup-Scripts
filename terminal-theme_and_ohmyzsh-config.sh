@@ -75,7 +75,7 @@ Ohmyzsh_config_dict=([powerlevel10k]=https://github.com/romkatv/powerlevel10k.gi
 Ohmyzsh_config=""
 write_plugins=0
 for key in ${(k)Ohmyzsh_config_dict}; do
-    Ask_yn "Do you want to install and use $key?"; result=$? # get Ask_ys() 
+    Ask_yn "Do you want to install and use $key?"; result=$? # get Ask_yn() 
     if [ $result = 1 ]; then
         if [ "$key" = "powerlevel10k" ]; then 
             sudo git clone ${Ohmyzsh_config_dict[$key]} $ZSH_CUSTOM/themes/$key
@@ -90,7 +90,7 @@ for key in ${(k)Ohmyzsh_config_dict}; do
 done
 
 # use sed to edit ~/.p10k.zsh
-Ask_yn "Do you want to use custom p10k setting?"; result=$? # get Ask_ys() 
+Ask_yn "Do you want to use custom p10k setting?"; result=$? # get Ask_yn() 
 if [ $result = 1 ]; then
     cp ./config/.p10k.zsh ~/
 fi
@@ -102,7 +102,7 @@ if [ $write_plugins = 1 ]; then
 fi
 
 # terminal theme setting
-Ask_yn "Do you want to use custom terminal theme setting?"; result=$? # get Ask_ys() 
+Ask_yn "Do you want to use custom terminal theme setting?"; result=$? # get Ask_yn() 
 if [ $result = 1 ]; then
     sudo mkdir ~/.local/share/fonts
     sudo cp ./ttf/*ttf ~/.local/share/fonts
