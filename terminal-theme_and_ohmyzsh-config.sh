@@ -89,16 +89,16 @@ for key in ${(k)Ohmyzsh_config_dict}; do
     fi
 done
 
-# use sed to edit ~/.zshrc
-if [ $write_plugins = 1 ]; then
-    sed -i "s/^plugins.*/plugins=(git$Ohmyzsh_config)/" ~/.zshrc
-    source ~/.zshrc
-fi
-
 # use sed to edit ~/.p10k.zsh
 Ask_yn "Do you want to use custom p10k setting?"; result=$? # get Ask_ys() 
 if [ $result = 1 ]; then
     cp ./config/.p10k.zsh ~/
+fi
+
+# use sed to edit ~/.zshrc
+if [ $write_plugins = 1 ]; then
+    sed -i "s/^plugins.*/plugins=(git$Ohmyzsh_config)/" ~/.zshrc
+    source ~/.zshrc
 fi
 
 # terminal theme setting
