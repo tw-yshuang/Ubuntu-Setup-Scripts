@@ -4,9 +4,10 @@
 
 | .sh File                                 | Installation                                                | Config                                                        | $Shell |
 | :--------------------------------------- | :---------------------------------------------------------- | :------------------------------------------------------------ | ------ |
-| **package.sh**                           | git, vim, curl                                              | git editer, git config --global user.name & user.email        | `bash` |
+| **package.sh**                           | git, vim, curl, extra_packages: openssh-server, screen, python3-pip                                              | git editer, git config --global user.name & user.email        | `bash` |
 | **zsh_ohmyzsh_setup.sh**                 | zsh, oh-my-zsh                                              |                                                               | `bash` |
-| **terminal-theme_and_ohmyzsh-config.sh** | powerlevel10k, zsh-autosuggestions, zsh-syntax-highlighting | `$SHELL profile`, custom `.p10k.zsh`, custom `gnome_terminal` | `zsh`  |
+| **ohmyzsh_config.sh** | powerlevel10k, zsh-autosuggestions, zsh-syntax-highlighting | `$SHELL profile`, custom `.p10k.zsh` | `zsh` | 
+| **terminal_config.sh** |  | custom `gnome_terminal`, `$SHELL profile` | `bash` |
 | **application.sh**                       | VScode, Google Chrome, VLC                                  |                                                               | `bash` |
 | **pyenv_setup.sh**                       | pyenv                                                       | `$SHELL profile`                                              | `bash` |
 

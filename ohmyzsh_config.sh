@@ -1,11 +1,11 @@
 #!/usr/bin/env zsh
-#>         +----------------------------------------+
-#>         |  terminal-theme_and_ohmyzsh-config.sh  |
-#>         +----------------------------------------+
+#>         +---------------------+
+#>         |  ohmyzsh-config.sh  |
+#>         +---------------------+
 #-
 #- SYNOPSIS
 #-
-#-    ./terminal-theme_and_ohmyzsh-config.sh [-h]
+#-    ./ohmyzsh-config.sh [-h]
 #-
 #- OPTIONS
 #-
@@ -14,7 +14,7 @@
 #-
 #- EXAMPLES
 #-
-#-    $ ./terminal-theme_and_ohmyzsh-config.sh -y
+#-    $ ./ohmyzsh-config.sh -y
 
 #====================================================
 # Part 1. Option Tool (DO NOT MODIFY)
@@ -99,13 +99,4 @@ fi
 if [ $write_plugins = 1 ]; then
     sed -i "s/^plugins.*/plugins=(git$Ohmyzsh_config)/" ~/.zshrc
     source ~/.zshrc
-fi
-
-# terminal theme setting
-Ask_yn "Do you want to use custom terminal theme setting?"; result=$? # get Ask_yn() 
-if [ $result = 1 ]; then
-    sudo mkdir ~/.local/share/fonts
-    sudo cp ./ttf/*ttf ~/.local/share/fonts
-    fc-cache -f -v 
-    dconf load /org/gnome/terminal/ < ./config/gnome_terminal_settings_backup.txt
 fi
