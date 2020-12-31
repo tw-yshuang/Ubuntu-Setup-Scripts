@@ -21,7 +21,7 @@
 #-
 #- EXAMPLES
 #-
-#-    $ ./package.sh -y --no_extra-packages
+#-    $ ./package.sh -y -no_extra-packages
 #-    $ ./package.sh -y -no_git-config --no_ssh-server
 
 #====================================================
