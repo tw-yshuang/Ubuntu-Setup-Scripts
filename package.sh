@@ -111,7 +111,7 @@ function Ask_yn(){
 #====================================================
 sudo apt update
 sudo apt upgrade
-sudo apt install -y git-all vim curl
+sudo apt install -y git-all vim curl wget make
 
 if [ $git_config = 1 ]; then
     # git: config global usr information
