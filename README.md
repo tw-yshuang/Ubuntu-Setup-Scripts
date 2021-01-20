@@ -17,5 +17,5 @@ If you want to setup all the setting, run:
 
 ```shell
 chomd +x ./all_setup.sh
-sudo ./all_setup.sh
+./all_setup.sh
 ```

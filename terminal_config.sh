@@ -98,7 +98,7 @@ if [ $result = 1 ]; then
     if grep -n "^export LANG*" $profile; then
         echo "You were already config LANG before, if you still want to config it, please manually edit $profile."
     else
-        printf "\n#Setting English for terminal\nexport LANG=C\n" >> $profile
+        printf "\n#Setting English for terminal\nexport LANG=C.UTF-8\n" >> $profile
         if [[ $SHELL == "*bash" ]]; then
             source $profile
         fi
