@@ -7,3 +7,4 @@ chmod +x package.sh zsh_ohmyzsh_setup.sh ohmyzsh_config.sh terminal_config.sh ap
 ./terminal_config.sh -y
 ./application.sh -y
 ./pyenv_setup.sh -y
+./nvm_setup.sh -y

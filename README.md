@@ -10,6 +10,7 @@
 | **terminal_config.sh**   |                                                                                 | custom `gnome_terminal`, `$SHELL profile`              | `bash` |
 | **application.sh**       | VScode, Google Chrome, VLC                                                      |                                                        | `bash` |
 | **pyenv_setup.sh**       | pyenv                                                                           | `$SHELL profile`                                       | `bash` |
+| **nvm_setup.sh**         | nvm                                                                             | `$SHELL profile`                                       | `bash` |
 
 Every .sh file can independent work.
 
