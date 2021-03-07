@@ -47,39 +47,42 @@ if [ "$#" -gt 0 ]; then
     while [ "$#" -gt 0 ]; do
         case "$1" in
             # Help
-            "-h"|"--help")
+            "-h"|"--help" )
                 show_script_help
                 exit 1
             ;;
             # All Accept
-            "-y")
+            "-y" )
                 all_accept=1
                 shift 1
             ;;
             # Not setting ~/.gitconfig
-            "-no_git-config")
+            "-no_git-config" )
                 git_config=0
                 shift 1
             ;;
             # do not install all the extra-packages
-            "-no_extra-packages")
+            "-no_extra-packages" )
                 extra_packages=0
                 shift 1
             ;;
             # Not install openssh-sever
-            "--no_ssh-server")
+            "--no_ssh-server" )
                 ssh_server=0
                 shift 1
             ;;
             # Not install screen
-            "--no_screen")
+            "--no_screen" )
                 screen=0
                 shift 1
             ;;
             # Not install python3-pip
-            "--no_pip3")
+            "--no_pip3" )
                 pip3=0
                 shift 1
+            ;;
+            * )
+            break
             ;;
         esac
     done

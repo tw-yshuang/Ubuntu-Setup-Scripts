@@ -91,7 +91,7 @@ if [ $result = 1 ]; then
         profile=~/.profile
         ;;
         * )
-        echo "unknow sehll, need to manually add pyenv config on your shell profile!!"
+        echo "unknow sehll, need to manually add 'export LANG=C.UTF-8' on your shell profile!!"
         ;;
     esac
 
