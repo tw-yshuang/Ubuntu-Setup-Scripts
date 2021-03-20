@@ -8,7 +8,7 @@
 | **zsh_ohmyzsh_setup.sh** | zsh, oh-my-zsh                                                                  |                                                        | `bash` |
 | **ohmyzsh_config.sh**    | powerlevel10k, zsh-autosuggestions, zsh-syntax-highlighting                     | `$SHELL profile`, custom `.p10k.zsh`                   | `zsh`  |
 | **terminal_config.sh**   |                                                                                 | custom `gnome_terminal`, `$SHELL profile`              | `bash` |
-| **application.sh**       | VScode, Google Chrome, VLC                                                      |                                                        | `bash` |
+| **application.sh**       | VScode, Google Chrome, VLC, GIMP, kolourpaint                                   |                                                        | `bash` |
 | **pyenv_setup.sh**       | pyenv                                                                           | `$SHELL profile`                                       | `bash` |
 | **nvm_setup.sh**         | nvm                                                                             | `$SHELL profile`                                       | `bash` |
 
