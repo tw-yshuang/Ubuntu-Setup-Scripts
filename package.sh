@@ -39,6 +39,7 @@ function show_script_help(){
 #* Design: if you want add some extra packages, please add slient and update Extra_package_dict(under the code slient mode).
 all_accept=0
 git_config=1
+chewing=1
 extra_packages=1
 ssh_server=1
 screen=1
@@ -61,7 +62,12 @@ if [ "$#" -gt 0 ]; then
                 git_config=0
                 shift 1
             ;;
-            # do not install all the extra-packages
+            # Not install Taiwanese typing method
+            "-no_chewing" )
+                chewing=0
+                shift
+            ;;
+            # Not install all the extra-packages
             "-no_extra-packages" )
                 extra_packages=0
                 shift 1
@@ -90,8 +96,29 @@ fi
 declare -A Extra_package_dict
 Extra_package_dict=([openssh-server]=$ssh_server [screen]=$screen [python3-pip]=$pip3)
 
+function Echo_Color(){
+    case $1 in
+        r* | R* )
+        COLOR='\e[31m'
+        ;;
+        g* | G* )
+        COLOR='\e[32m'
+        ;;
+        y* | Y* )
+        COLOR='\e[33m'
+        ;;
+        b* | B* )
+        COLOR='\e[34m'
+        ;;
+        *)
+        echo "$COLOR Wrong COLOR keyword!\e[0m" 
+        ;;
+    esac
+    echo -e "$COLOR$2\e[0m"
+}
+
 function Ask_yn(){
-    printf "$1 [y/n]" 
+    printf "\e[33m$1 [y/n] \e[0m" 
     if [ $all_accept = 1 ]; then
         printf "-y\n"
         return 1
@@ -102,7 +129,7 @@ function Ask_yn(){
     elif [ "$respond" = "n" -o "$respond" = "N" ]; then
         return 0
     else
-        echo 'wrong command!!'
+        Echo_Color r 'wrong command!!'
         Ask_yn $1
         return $?
     fi
@@ -169,21 +196,30 @@ if [ $git_config = 1 ]; then
             printf "%b" "$(Merge_SRC 0)" >> $FILE_PATH
         fi
     fi
+
+    Echo_Color g "Done git_config!!" 
+fi
+
+if [ $chewing = 1 ]; then
+    sudo apt install -y ibus ibus-chewing
+    Echo_Color g "Compeleted install of chewing"
 fi
 
 # extra packages install
 if [ $extra_packages = 1 ]; then
-    echo "!!!!!!!!!!!!!!WARNING!!!!!!!!!!!!!!"
-    echo "This is the extra part, some packages may not be useful to you!"
+    Echo_Color y '
+    !!!!!!!!!!!!!!WARNING!!!!!!!!!!!!!!
+    This is the extra part, some packages may not be useful to you!'
     for key in ${!Extra_package_dict[*]}; do
         if [ ${Extra_package_dict[$key]} = 1 ]; then
             Ask_yn "Do you want to install $key?"; result=$?
             if [ $result = 1 ]; then
                 sudo apt install -y $key
+                Echo_Color g "Compeleted install of $key"
             fi
         fi
     done
 fi
 
 sudo apt-get autoremove
-echo "Done!!"
+Echo_Color g "Done!! $0"

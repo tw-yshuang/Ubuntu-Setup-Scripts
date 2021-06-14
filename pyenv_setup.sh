@@ -46,8 +46,29 @@ if [ "$#" -gt 0 ]; then
     done
 fi
 
+function Echo_Color(){
+    case $1 in
+        r* | R* )
+        COLOR='\e[31m'
+        ;;
+        g* | G* )
+        COLOR='\e[32m'
+        ;;
+        y* | Y* )
+        COLOR='\e[33m'
+        ;;
+        b* | B* )
+        COLOR='\e[34m'
+        ;;
+        *)
+        echo "$COLOR Wrong COLOR keyword!\e[0m" 
+        ;;
+    esac
+    echo -e "$COLOR$2\e[0m"
+}
+
 function Ask_yn(){
-    printf "$1 [y/n]" 
+    printf "\e[33m$1 [y/n] \e[0m" 
     if [ $all_accept = 1 ]; then
         printf "-y\n"
         return 1
@@ -58,7 +79,7 @@ function Ask_yn(){
     elif [ "$respond" = "n" -o "$respond" = "N" ]; then
         return 0
     else
-        echo 'wrong command!!'
+        Echo_Color r 'wrong command!!'
         Ask_yn $1
         return $?
     fi
@@ -87,7 +108,7 @@ case $SHELL in
     profile=~/.profile
     ;;
     * )
-    echo "unknow sehll, need to manually add pyenv config on your shell profile!!"
+    Echo_Color r "Unknow shell, need to manually add pyenv config on your shell profile!!"
     ;;
 esac
 # sudo apt-get install -y make build-essential libssl-dev zlib1g-dev libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm libncurses5-dev libncursesw5-dev xz-utils tk-dev libffi-dev liblzma-dev python-openssl git
@@ -99,11 +120,11 @@ git clone https://github.com/pyenv/pyenv.git ~/.pyenv
 Ask_yn "Do you want automatic add pyenv config?"; result=$?
 if [ $result = 1 ]; then
     if grep -xn "$Keyword" $profile; then
-        echo "You have already added pyenv config in $profile !!"
+        Echo_Color g "You have already added pyenv config in $profile !!"
     else
         printf "\n# pyenv setting\n$Keyword\n" >> $profile
     fi
-    echo "Done!!"
+    Echo_Color g "Done config!!"
     
     if [ $shell = bash ]; then
         source $profile
@@ -111,3 +132,5 @@ if [ $result = 1 ]; then
         exec $shell
     fi
 fi
+
+Echo_Color g "Done!! $0"

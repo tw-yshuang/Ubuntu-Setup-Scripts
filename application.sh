@@ -46,8 +46,29 @@ if [ "$#" -gt 0 ]; then
     done
 fi
 
+function Echo_Color(){
+    case $1 in
+        r* | R* )
+        COLOR='\e[31m'
+        ;;
+        g* | G* )
+        COLOR='\e[32m'
+        ;;
+        y* | Y* )
+        COLOR='\e[33m'
+        ;;
+        b* | B* )
+        COLOR='\e[34m'
+        ;;
+        *)
+        echo "$COLOR Wrong COLOR keyword!\e[0m" 
+        ;;
+    esac
+    echo -e "$COLOR$2\e[0m"
+}
+
 function Ask_yn(){
-    printf "$1 [y/n]" 
+    printf "\e[33m$1 [y/n] \e[0m" 
     if [ $all_accept = 1 ]; then
         printf "-y\n"
         return 1
@@ -58,7 +79,7 @@ function Ask_yn(){
     elif [ "$respond" = "n" -o "$respond" = "N" ]; then
         return 0
     else
-        echo 'wrong command!!'
+        Echo_Color r 'wrong command!!'
         Ask_yn $1
         return $?
     fi
@@ -68,16 +89,16 @@ function Ask_yn(){
 #====================================================
 # Part 2. Main
 #====================================================
-sudo apt update
-sudo apt upgrade
+sudo apt-get update
+sudo apt-get upgrade
 
 declare -A Application_dict
-Application_dict=([code]="VScode" [google-chrome]="Chrome" [vlc]="VLC" [gimp]="GIMP" [kolourpaint]="kolourpaint")
+Application_dict=([code]="VScode" [google-chrome]="Chrome" [vlc]="vlc" [gimp]="GIMP" [kolourpaint]="kolourpaint4" [obs]="obs-studio" )
 
 for key in ${!Application_dict[*]}; do
     app_root="$(command -v $key)" # get application root
     if [ "$app_root" = "" ]; then
-        Ask_yn "Do you wamt to install ${Application_dict[$key]}?"; result=$? # get Ask_yn() return {Application_dict[$key]}
+        Ask_yn "Do you want to install ${Application_dict[$key]}?"; result=$? # get Ask_yn() return {Application_dict[$key]}
         if [ $result = 1 ]; then
             case ${Application_dict[$key]} in 
                 "VScode" ) # install VScode
@@ -95,20 +116,19 @@ for key in ${!Application_dict[*]}; do
                     sudo apt-get install -f
                     rm ./google-chrome-stable_current_amd64.deb
                     ;;
-                "VLC" ) # install VLC
-                    sudo apt-get install vlc -y
-                    ;;
-                "GIMP" )
+                "GIMP" ) # install GIMP
                     sudo add-apt-repository ppa:ubuntuhandbook1/gimp
-                    sudo apt update
-                    sudo apt install gimp
+                    sudo apt-get update
+                    sudo apt-get install gimp
                     ;;
-                "kolourpaint" )
-                    sudo apt install kolourpaint4
+                * )
+                    sudo apt-get install ${Application_dict[$key]}
                     ;;
             esac
         fi
     else
-        echo "You are already installed ${Application_dict[$key]} before~"
+        Echo_Color g "You are already installed ${Application_dict[$key]} before~"
     fi
 done
+
+Echo_Color g "Done!! $0"
