@@ -12,6 +12,7 @@
 #-    -y,                    all accept.
 #-    -h, --help             print help information.
 #-    -no_git-config         do not costom config git.
+#-    -no_chewing            do not install Taiwanese typing method.
 #-    -no_extra-packages     do not install all the extra-packages.
 #-      
 #-    =========== extra package options ===========
@@ -25,12 +26,12 @@
 #-    $ ./package.sh -y -no_git-config --no_ssh-server
 
 #====================================================
-# Part 1. Option Tool (DO NOT MODIFY)
+# Part 1. Option Tool
 #====================================================
 # Print script help
 function show_script_help(){
     echo
-    head -25 $0 | # find this file top 16 lines.
+    head -26 $0 | # find this file top 26 lines.
     grep "^#[-|>]" | # show the line that include "#-" or "#>".
     sed -e "s/^#[-|>]*//1" # use nothing to replace "#-" or "#>" that the first keyword in every line.  
     echo 

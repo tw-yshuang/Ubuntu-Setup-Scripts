@@ -17,7 +17,7 @@
 #-    $ ./application.sh -y
 
 #====================================================
-# Part 1. Option Tool (DO NOT MODIFY)
+# Part 1. Option Tool
 #====================================================
 # Print script help
 function show_script_help(){
