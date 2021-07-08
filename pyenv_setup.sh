@@ -125,12 +125,7 @@ if [ $result = 1 ]; then
         printf "\n# pyenv setting\n$Keyword\n" >> $profile
     fi
     Echo_Color g "Done config!!"
-    
-    if [ $shell = bash ]; then
-        source $profile
-    else
-        exec $shell
-    fi
+    source $profile
 fi
 
 Echo_Color g "Done!! $0"

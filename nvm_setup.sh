@@ -89,14 +89,14 @@ function Ask_yn(){
 #====================================================
 # Part 2. Main
 #====================================================
-Keyword='
-nvm() {
+Keyword='nvm() {
   echo "🚨 NVM not loaded! Loading now..."
   unset -f nvm
   export NVM_PREFIX="$HOME/.nvm"
   [ -s "$NVM_PREFIX/nvm.sh" ] && . "$NVM_PREFIX/nvm.sh"
   nvm "$@"
 }'
+
 case $SHELL in
     *zsh )
     shell=zsh
@@ -118,20 +118,20 @@ esac
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.37.2/install.sh | $shell
 
 # config profile
-Ask_yn "Do you want automatic add nvm config?"; result=$?
+Ask_yn "Do you want to use costom nvm setting?"; result=$?
 if [ $result = 1 ]; then
-    if grep -xn "$Keyword" $profile; then
-        echo "You have already added nvm config in $profile !!"
+    # use comment to detect is already exist or not
+    if grep -xn '# costomize nvm setting' $profile; then
+        echo "You already have costomize nvm setting in $profile !!"
     else
-        printf "\n# nvm setting\n$Keyword\n" >> $profile
+        # delete original nvm setting in the profile
+        original_line=$(grep -xn 'export NVM_DIR="$HOME/.nvm"' $profile | head -n 1 | cut -d ':' -f 1)
+        sed -i "$original_line, $(($original_line + 2))d" $profile
+        # import costomize nvm setting
+        printf "# customize nvm setting\n$Keyword\n" >> $profile
     fi
     Echo_Color g "Done config!!"
-    
-    if [ $shell = bash ]; then
-        source $profile
-    else
-        exec $shell
-    fi
+    source $profile
 fi
 
 Echo_Color g "Done!! $0"

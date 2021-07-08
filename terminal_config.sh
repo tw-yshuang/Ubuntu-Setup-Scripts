@@ -122,7 +122,7 @@ if [ $result = 1 ]; then
         printf "\n#Setting English for terminal\nexport LANG=C.UTF-8\n" >> $profile
         Echo_Color g "Done config!!"
 
-        if [[ $SHELL == "*bash" ]]; then
+        if [[ $SHELL == *bash ]]; then
             source $profile
         fi
     fi
