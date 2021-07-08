@@ -128,7 +128,7 @@ if [ $result = 1 ]; then
         original_line=$(grep -xn 'export NVM_DIR="$HOME/.nvm"' $profile | head -n 1 | cut -d ':' -f 1)
         sed -i "$original_line, $(($original_line + 2))d" $profile
         # import costomize nvm setting
-        printf "# customize nvm setting\n$Keyword\n" >> $profile
+        printf "\n# customize nvm setting\n$Keyword\n" >> $profile
     fi
     Echo_Color g "Done config!!"
     source $profile
