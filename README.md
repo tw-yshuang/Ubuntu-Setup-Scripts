@@ -4,7 +4,7 @@
 
 | .sh File                 | Installation                                                                                                       | Config                                                 | $Shell |
 | :----------------------- | :----------------------------------------------------------------------------------------------------------------- | :----------------------------------------------------- | ------ |
-| **package.sh**           | git, vim, curl, wget, make, typing_method: ibus, ibus-chewing, extra_packages: openssh-server, screen, python3-pip | git editer, git config --global user.name & user.email, vim config | `bash` |
+| **package.sh**           | git, vim, curl, wget, make, typing_method: ibus, ibus-chewing, extra_packages: openssh-server, screen, python3-pip | git editer, git config --global user.name & user.email, custom `.vimrc` | `bash` |
 | **zsh_ohmyzsh_setup.sh** | zsh, oh-my-zsh                                                                                                     |                                                        | `bash` |
 | **ohmyzsh_config.sh**    | powerlevel10k, zsh-autosuggestions, zsh-syntax-highlighting                                                        | `$SHELL profile`, custom `.p10k.zsh`                   | `zsh`  |
 | **terminal_config.sh**   |                                                                                                                    | custom `gnome_terminal`, `$SHELL profile`              | `bash` |
