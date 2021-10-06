@@ -68,7 +68,7 @@ function Echo_Color(){
 }
 
 function Ask_yn(){
-    printf "\e[33m$1 [y/n] \e[0m" 
+    printf "\e[33m$1\e[0m\e[33m [y/n] \e[0m"
     if [ $all_accept = 1 ]; then
         printf "-y\n"
         return 1
@@ -111,7 +111,7 @@ for key in ${(k)Ohmyzsh_config_dict}; do
 done
 
 # use sed to edit ~/.p10k.zsh
-Ask_yn "Do you want to use custom p10k setting?"; result=$? # get Ask_yn() 
+Ask_yn "Do you want to use customize p10k setting?"; result=$? # get Ask_yn() 
 if [ $result = 1 ]; then
     cp ./config/.p10k.zsh ~/
 fi

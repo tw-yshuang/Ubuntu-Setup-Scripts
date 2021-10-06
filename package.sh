@@ -11,7 +11,8 @@
 #-
 #-    -y,                    all accept.
 #-    -h, --help             print help information.
-#-    -no_git-config         do not costom config git.
+#-    -no_git-config         do not customize git.
+#-    -no_vim-config         do not use customize .vimrc config file (from ./config/.vimrc).
 #-    -no_chewing            do not install Taiwanese typing method.
 #-    -no_extra-packages     do not install all the extra-packages.
 #-      
@@ -31,7 +32,7 @@
 # Print script help
 function show_script_help(){
     echo
-    head -26 $0 | # find this file top 26 lines.
+    head -28 $0 | # find this file top 26 lines.
     grep "^#[-|>]" | # show the line that include "#-" or "#>".
     sed -e "s/^#[-|>]*//1" # use nothing to replace "#-" or "#>" that the first keyword in every line.  
     echo 
@@ -40,6 +41,7 @@ function show_script_help(){
 #* Design: if you want add some extra packages, please add slient and update Extra_package_dict(under the code slient mode).
 all_accept=0
 git_config=1
+vim_config=1
 chewing=1
 extra_packages=1
 ssh_server=1
@@ -61,6 +63,11 @@ if [ "$#" -gt 0 ]; then
             # Not setting ~/.gitconfig
             "-no_git-config" )
                 git_config=0
+                shift 1
+            ;;
+            # Not use custom .vimrc config file (from ./config/.vimrc).
+            "-no_vim-config" )
+                vim_config=0
                 shift 1
             ;;
             # Not install Taiwanese typing method
@@ -119,7 +126,7 @@ function Echo_Color(){
 }
 
 function Ask_yn(){
-    printf "\e[33m$1 [y/n] \e[0m" 
+    printf "\e[33m$1\e[0m\e[33m [y/n] \e[0m"
     if [ $all_accept = 1 ]; then
         printf "-y\n"
         return 1
@@ -201,9 +208,17 @@ if [ $git_config = 1 ]; then
     Echo_Color g "Done git_config!!" 
 fi
 
+if [ $vim_config = 1 ]; then
+    Ask_yn "Do you want to use customize VIM editor setting? $(Echo_Color r '(If you do this, the old ~/.vimrc will remove it.)')"; result=$?
+    if [ $result = 1 ]; then
+        cp ./config/.vimrc ~/
+        Echo_Color g "Completed VIM editor customize setting"
+    fi
+fi
+
 if [ $chewing = 1 ]; then
     sudo apt install -y ibus ibus-chewing
-    Echo_Color g "Compeleted install of chewing"
+    Echo_Color g "Completed install of chewing"
 fi
 
 # extra packages install
@@ -216,7 +231,7 @@ if [ $extra_packages = 1 ]; then
             Ask_yn "Do you want to install $key?"; result=$?
             if [ $result = 1 ]; then
                 sudo apt install -y $key
-                Echo_Color g "Compeleted install of $key"
+                Echo_Color g "Completed install of $key"
             fi
         fi
     done

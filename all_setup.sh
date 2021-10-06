@@ -29,7 +29,7 @@ if [[ $SHELL != *zsh ]]; then
   ./package.sh $all_accept
   ./zsh_ohmyzsh_setup.sh
   ./ohmyzsh_config.sh $all_accept
-  Echo_Color g "Compeleted ZSH setup"
+  Echo_Color g "Completed ZSH setup"
   Echo_Color y "relogin and execute this script again!!"
 else
   ./terminal_config.sh $all_accept

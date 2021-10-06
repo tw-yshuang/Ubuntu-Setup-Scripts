@@ -68,7 +68,7 @@ function Echo_Color(){
 }
 
 function Ask_yn(){
-    printf "\e[33m$1 [y/n] \e[0m" 
+    printf "\e[33m$1\e[0m\e[33m [y/n] \e[0m"
     if [ $all_accept = 1 ]; then
         printf "-y\n"
         return 1
