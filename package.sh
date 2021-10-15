@@ -73,7 +73,7 @@ if [ "$#" -gt 0 ]; then
             # Not install Taiwanese typing method
             "-no_chewing" )
                 chewing=0
-                shift
+                shift 1
             ;;
             # Not install all the extra-packages
             "-no_extra-packages" )
