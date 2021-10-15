@@ -1,0 +1,105 @@
+#!/usr/bin/env bash
+
+# for speed up shell
+nvm() {
+  echo "🚨 NVM not loaded! Loading now..."
+  unset -f nvm
+  export NVM_PREFIX="$HOME/.nvm"
+  [ -s "$NVM_PREFIX/nvm.sh" ] && . "$NVM_PREFIX/nvm.sh"
+  nvm "$@"
+}
+
+# extra pipenv command
+pipenv_correspond() {
+  local isDefault=true
+  local isLS=true
+  local isRM=false
+
+  local show_proj_root=true
+  local CORRESPOND=""
+  declare -a venvs_root_arr=()
+  
+  local help_book='Usage: cat [OPTION]\n\nOPTION:
+  ls,  --list                list all the corresponding projects_root & venvs
+  uls, --useless             list all the not existing projects_roots that still have correspondenting venvs
+  npr, --no-project-root     hide projects_root
+  rm,  --remove              remove all the venvs from command: "ls" or "uls", deafult is use "uls"
+  '
+  function Show_root(){
+    declare -a venvs_arr=()
+    declare -i num_venvs=0
+    if $show_proj_root; then
+      for f in $(find ~/.local/share/virtualenvs/*/.project -type f); do
+        proj_root="$(cat $f)" && [ $CORRESPOND -d $proj_root ] && echo "\nproj: $proj_root\nvenv: ${f//\/.project}\n" && venvs_root_arr+=(${f//\/.project}) && num_venvs+=1
+      done
+    else
+      for f in $(find ~/.local/share/virtualenvs/*/.project -type f); do
+        proj_root="$(cat $f)" && [ $CORRESPOND -d $proj_root ] && echo "${f//\/.project}\n" && venvs_root_arr+=(${f//\/.project}) && num_venvs+=1
+      done
+    fi
+    echo "Total venvs: $num_venvs"
+  }
+  if [ "$#" -gt 0 ]; then
+    while [ "$#" -gt 0 ]; do
+      case $1 in
+        "-h" | "--help" )
+          echo $help_book
+          return
+        ;;
+        "ls" | "--list" )
+          isDefault=false
+          isLS=true
+          shift 1
+        ;;
+        "uls" | "--useless" )
+          isDefault=false
+          isLS=false
+          shift 1
+        ;;
+        "npr" | "--no-project-root" )
+          show_proj_root=false
+          shift 1
+        ;;
+        "rm"  | "--remove" )
+          isRM=true
+          shift 1 
+        ;;
+        *)
+          echo "\e[31mWrong command keyword!\e[0m" 
+          return
+        ;;
+      esac
+    done
+  fi
+  
+  if ! $isLS || ( $isRM && $isDefault ); then
+    CORRESPOND="!"
+    echo "Useless venvs:"
+  else
+    echo "Still corresponding venvs:"
+  fi
+
+  Show_root venvs_root_arr
+
+  if $isRM; then
+    while ! $isDefault && $isLS; do
+      printf "\e[33mAre you sure you want to remove all venvs that still existing projects_roots?[y/n] \e[0m"
+      read respond
+      if [ "$respond" = "n" -o "$respond" = "N" ]; then
+        echo "bye~~~"
+        return
+      elif [ "$respond" != "y" -a "$respond" != "Y" ]; then
+        echo "Must type 'y' or 'n'!"
+      else
+        break
+      fi
+    done
+    echo $venvs_root_arr
+    echo "\e[33mWait...\e[0m" 
+    for value in ${venvs_root_arr[@]}; do
+      echo "remving... $value"
+      # rm -rf $value
+    done
+    echo "\e[32mSuccessflly removed all venvs!!\e[0m" 
+  fi
+}
