@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # for speed up shell
-nvm() {
+nvm(){
   echo "🚨 NVM not loaded! Loading now..."
   unset -f nvm
   export NVM_PREFIX="$HOME/.nvm"
@@ -10,7 +10,7 @@ nvm() {
 }
 
 # extra pipenv command
-pipenv_correspond() {
+pipenv_correspond(){
   local isDefault=true
   local isLS=true
   local isRM=false
