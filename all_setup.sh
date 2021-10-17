@@ -34,7 +34,7 @@ if [[ $SHELL != *zsh ]]; then
 else
   ./terminal_config.sh $all_accept
   ./application.sh $all_accept
-  ./pyenv_setup.sh $all_accept
-  ./nvm_setup.sh $all_accept
+  ./language_package.sh $all_accept
+  ./custom_functions.sh $all_accept
   Echo_Color g "All Done~~~"
 fi
