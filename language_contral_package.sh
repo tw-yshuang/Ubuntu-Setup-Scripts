@@ -58,6 +58,13 @@ if [ "$#" -gt 0 ]; then
     done
 fi
 
+custom_func_keyword="~/.customfunction"
+custom_func_root=~/.customfunction
+
+funcs_code_begin=($(grep -xn "^\S*(){" ./config/.customfunction)) # \S: match non-whitespace character
+funcs_code_end=($(grep -xn "}" ./config/.customfunction))
+declare -A funcs_info=([nvm]=$no_nvm [pipenv_correspond]=$no_pipenv_correspond)
+
 function Echo_Color(){
     case $1 in
         r* | R* )
@@ -101,18 +108,15 @@ function Ask_yn(){
 #====================================================
 # Part 2. Main
 #====================================================
-custom_func_keyword="~/.customfunction"
-custom_func_root=~/.customfunction
-
-func_begin_arr=($(grep -xn "^\S*(){" ./config/.customfunction)) # \S: match non-whitespace character
-func_end_arr=($(grep -xn "}" ./config/.customfunction))
-
 function Get_function_code(){
-    for key in ${!func_end_arr[*]}; do
-        if echo ${func_begin_arr[$key]} | grep --silent -i $1; then
-          declare -i begin=$(echo ${func_begin_arr[$key]} | cut -d ':' -f 1)-1
-          declare -i end=$(echo ${func_end_arr[$key]} | cut -d ':' -f 1)+1
-          function_code=$(sed -n "$begin,$end p" ./config/.customfunction)
+    declare -i key
+    declare -i begin
+    declare -i end
+    for key in ${!funcs_code_end[*]}; do
+        if echo ${funcs_code_begin[$key]} | grep --silent -i $1; then
+            begin=$(echo ${funcs_code_begin[$key]} | cut -d ':' -f 1)-1
+            end=$(echo ${funcs_code_end[$key]} | cut -d ':' -f 1)
+            function_code=$(sed -n "$begin,$end p" ./config/.customfunction)
         fi
     done
 }
@@ -135,9 +139,15 @@ case $SHELL in
     ;;
 esac
 
-echo '#!/usr/bin/env bash' > $custom_func_root
-if grep -n "source $custom_func_keyword" $profile; then
-    echo "$custom_func_keyword is already in the $profile"
+if [ ! -f "$custom_func_root" ]; then
+    echo '#!/usr/bin/env bash' > $custom_func_root
+else
+    Echo_Color y "You already have .customfunction"
+fi
+Echo_Color g "File path: $custom_func_root"
+
+if [ "$(grep -n "source $custom_func_keyword" $profile)" != "" ]; then
+    Echo_Color y "$custom_func_keyword is already in the $profile"
 else
     Echo_Color y "Write: source $custom_func_keyword into $profile"
     printf "\n# custom func. by self\nsource $custom_func_keyword\n" >> $profile
@@ -146,16 +156,20 @@ fi
 if ! $no_nvm; then
     # delete original nvm setting in the profile
     num_original_line=$(grep -xn 'export NVM_DIR="$HOME/.nvm"' $profile | head -n 1 | cut -d ':' -f 1)
-    if [ "$num_original_line" -gt 0 ]; then
-        Echo_Color y "remove the office support method..."
+    if [ "$num_original_line" != "" ]; then
+        Echo_Color y "remove the official support method..."
         sed -i "$num_original_line, $(($num_original_line + 2))d" $profile
     fi
-
-    Get_function_code "nvm"; printf "\n$function_code\n" >> $custom_func_root
 fi
 
-if ! $no_pipenv_correspond; then
-    Get_function_code "pipenv_correspond"; printf "\n$function_code\n" >> $custom_func_root
-fi
+for key in ${!funcs_info[*]}; do
+    if ! ${funcs_info[$key]}; then
+        if [ "$(grep "$key" $custom_func_root)" != "" ]; then
+            Echo_Color y "You already have $key() in $custom_func_root."
+        else
+            Get_function_code "$key"; printf "\n$function_code\n" >> $custom_func_root
+        fi
+    fi
+done
 
 Echo_Color g "Done config!!"
