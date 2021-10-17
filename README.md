@@ -9,8 +9,9 @@
 | **ohmyzsh_config.sh**    | powerlevel10k, zsh-autosuggestions, zsh-syntax-highlighting                                                        | `$SHELL profile`, custom `.p10k.zsh`                   | `zsh`  |
 | **terminal_config.sh**   |                                                                                                                    | custom `gnome_terminal`, `$SHELL profile`              | `bash` |
 | **application.sh**       | VScode, Google Chrome, VLC, GIMP, kolourpaint4, OBS                                                                |                                                        | `bash` |
-| **pyenv_setup.sh**       | pyenv                                                                                                              | `$SHELL profile`                                       | `bash` |
-| **nvm_setup.sh**         | nvm                                                                                                                | `$SHELL profile`                                       | `bash` |
+| **language_package.sh**       | pyenv, pipenv, nvm                                                                                                              | `$SHELL profile`                                       | `bash` |
+| **custom_function.sh**       | `nvm()`: for seed up shell. `pipenv_correspond()`: find the correspond venvs & remove                                                                                            it.                   | `$SHELL profile`, `$HOME/.customfinction`                                       | `bash` |
+|
 
 Every .sh file can independent work.
 
