@@ -19,7 +19,7 @@ pipenv_correspond(){
   local CORRESPOND=""
   declare -a venvs_root_arr=()
   
-  local help_book='Usage: cat [OPTION]\n\nOPTION:
+  local help_book='Usage: pipenv_correspond [OPTION]\n\nOPTION:
   ls,  --list                list all the corresponding projects_root & venvs
   uls, --useless             list all the not existing projects_roots that still have correspondenting venvs
   npr, --no-project-root     hide projects_root
@@ -98,7 +98,7 @@ pipenv_correspond(){
     echo "\e[33mWait...\e[0m" 
     for value in ${venvs_root_arr[@]}; do
       echo "remving... $value"
-      # rm -rf $value
+      rm -rf $value
     done
     echo "\e[32mSuccessflly removed all venvs!!\e[0m" 
   fi
