@@ -1,11 +1,15 @@
 #!/usr/bin/env bash
-#>            +----------------+
-#>            |  nvm_setup.sh  |
-#>            +----------------+
+#>         +---------------------------+
+#>         |    language_package.sh    |
+#>         +---------------------------+
 #-
 #- SYNOPSIS
 #-
-#-    ./nvm_setup.sh [-h]
+#-    ./language_package.sh [-h]
+#-    
+#-    It will intatll Language Packages below:
+#-        Python : pyenv, pipenv
+#-        NodeJS : nvm
 #-
 #- OPTIONS
 #-
@@ -14,7 +18,7 @@
 #-
 #- EXAMPLES
 #-
-#-    $ ./nvm_setup.sh -y
+#-    $ ./language_package.sh -y
 
 #====================================================
 # Part 1. Option Tool
@@ -22,7 +26,7 @@
 # Print script help
 function show_script_help(){
     echo
-    head -17 $0 | # find this file top 16 lines.
+    head -22 $0 | # find this file top 16 lines.
     grep "^#[-|>]" | # show the line that include "#-" or "#>".
     sed -e "s/^#[-|>]*//1" # use nothing to replace "#-" or "#>" that the first keyword in every line.  
     echo 
@@ -89,14 +93,11 @@ function Ask_yn(){
 #====================================================
 # Part 2. Main
 #====================================================
-Keyword='nvm() {
-  echo "🚨 NVM not loaded! Loading now..."
-  unset -f nvm
-  export NVM_PREFIX="$HOME/.nvm"
-  [ -s "$NVM_PREFIX/nvm.sh" ] && . "$NVM_PREFIX/nvm.sh"
-  nvm "$@"
-}'
-
+pyenv_Keyword='export PYENV_ROOT="$HOME/.pyenv"
+export PATH="$PYENV_ROOT/bin:$PATH"
+if command -v pyenv 1>/dev/null 2>&1; then
+    eval "$(pyenv init -)"
+fi'
 case $SHELL in
     *zsh )
     shell=zsh
@@ -111,27 +112,34 @@ case $SHELL in
     profile=~/.profile
     ;;
     * )
-    Echo_Color r "Unknow shell, need to manually add nvm config on your shell profile!!"
+    Echo_Color r "Unknow shell, need to manually add pyenv config on your shell profile!!"
     ;;
 esac
 
-curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.37.2/install.sh | $shell
-
-# config profile
-Ask_yn "Do you want to use costom nvm setting?"; result=$?
+Ask_yn "Do you want to install pyenv"; result=$?
 if [ $result = 1 ]; then
-    # use comment to detect is already exist or not
-    if grep -xn '# costomize nvm setting' $profile; then
-        echo "You already have costomize nvm setting in $profile !!"
+    sudo apt-get update
+    sudo apt-get install --no-install-recommends make build-essential libssl-dev zlib1g-dev libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm libncurses5-dev xz-utils tk-dev libxml2-dev libxmlsec1-dev libffi-dev liblzma-dev
+    git clone https://github.com/pyenv/pyenv.git ~/.pyenv
+
+    if [ "$(grep -xn "$pyenv_Keyword" $profile)" != "" ]; then
+        Echo_Color g "You have already added pyenv config in $profile !!"
     else
-        # delete original nvm setting in the profile
-        original_line=$(grep -xn 'export NVM_DIR="$HOME/.nvm"' $profile | head -n 1 | cut -d ':' -f 1)
-        sed -i "$original_line, $(($original_line + 2))d" $profile
-        # import costomize nvm setting
-        printf "\n# customize nvm setting\n$Keyword\n" >> $profile
+        # config profile
+        printf "\n# pyenv setting\n$pyenv_Keyword\n" >> $profile
     fi
-    Echo_Color g "Done config!!"
-    source $profile
 fi
 
+Ask_yn "Do you want to install pipenv?"; result=$?
+if [ $result = 1 ]; then
+    pip install pipenv
+fi
+
+Ask_yn "Do you want to install nvm?"; result=$?
+if [ $result = 1 ]; then
+    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | $shell
+fi
+
+
+source $profile
 Echo_Color g "Done!! $0"

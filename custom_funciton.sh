@@ -25,7 +25,7 @@
 # Print script help
 function show_script_help(){
     echo
-    head -17 $0 | # find this file top 16 lines.
+    head -21 $0 | # find this file top 16 lines.
     grep "^#[-|>]" | # show the line that include "#-" or "#>".
     sed -e "s/^#[-|>]*//1" # use nothing to replace "#-" or "#>" that the first keyword in every line.  
     echo 
@@ -172,4 +172,5 @@ for key in ${!funcs_info[*]}; do
     fi
 done
 
-Echo_Color g "Done config!!"
+source $profile
+Echo_Color g "Done!! $0"
