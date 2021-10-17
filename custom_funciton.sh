@@ -167,6 +167,7 @@ for key in ${!funcs_info[*]}; do
         if [ "$(grep "$key" $custom_func_root)" != "" ]; then
             Echo_Color y "You already have $key() in $custom_func_root."
         else
+            # this may cause some word incurrent, but it still can work.
             Get_function_code "$key"; printf "\n$function_code\n" >> $custom_func_root
         fi
     fi
