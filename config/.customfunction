@@ -30,7 +30,7 @@ pipenv_correspond(){
     declare -i num_venvs=0
     if $show_proj_root; then
       for f in $(find ~/.local/share/virtualenvs/*/.project -type f); do
-        proj_root="$(cat $f)" && [ $CORRESPOND -d $proj_root ] && echo "\nproj: $proj_root\nvenv: ${f//\/.project}\n" && venvs_root_arr+=(${f//\/.project}) && num_venvs+=1
+        proj_root="$(cat $f)" && [ $CORRESPOND -d $proj_root ] && echo "proj: $proj_root\nvenv: ${f//\/.project}\n" && venvs_root_arr+=(${f//\/.project}) && num_venvs+=1
       done
     else
       for f in $(find ~/.local/share/virtualenvs/*/.project -type f); do
@@ -74,9 +74,9 @@ pipenv_correspond(){
   
   if ! $isLS || ( $isRM && $isDefault ); then
     CORRESPOND="!"
-    echo "Useless venvs:"
+    echo "Useless venvs:\n"
   else
-    echo "Still corresponding venvs:"
+    echo "Still corresponding venvs:\n"
   fi
 
   Show_root venvs_root_arr
