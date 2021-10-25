@@ -1,4 +1,4 @@
-# Automatic-Installation_basic-Ubuntu-setting
+# Ubuntu-Setup-Scripts
 
 ## File Content
 
