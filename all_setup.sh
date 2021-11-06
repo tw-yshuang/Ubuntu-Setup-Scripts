@@ -22,19 +22,20 @@ function Echo_Color(){
 }
 
 
-all_accept = -y
+all_accept=-y
 
 if [[ $SHELL != *zsh ]]; then
-  chmod +x package.sh zsh_ohmyzsh_setup.sh ohmyzsh_config.sh terminal_config.sh application.sh language_package.sh custom_funciton.sh 
+  chmod +x package.sh zsh_ohmyzsh_setup.sh ohmyzsh_config.sh
   ./package.sh $all_accept
   ./zsh_ohmyzsh_setup.sh
   ./ohmyzsh_config.sh $all_accept
   Echo_Color g "Completed ZSH setup"
   Echo_Color y "relogin and execute this script again!!"
 else
+  chmod +x terminal_config.sh application.sh language_package.sh custom_function.sh 
   ./terminal_config.sh $all_accept
   ./application.sh $all_accept
   ./language_package.sh $all_accept
-  ./custom_functions.sh $all_accept
+  ./custom_function.sh $all_accept
   Echo_Color g "All Done~~~"
 fi
