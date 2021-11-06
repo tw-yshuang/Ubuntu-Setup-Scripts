@@ -25,7 +25,7 @@ function Echo_Color(){
 all_accept = -y
 
 if [[ $SHELL != *zsh ]]; then
-  chmod +x package.sh zsh_ohmyzsh_setup.sh ohmyzsh_config.sh terminal_config.sh application.sh pyenv_setup.sh nvm_setup.sh
+  chmod +x package.sh zsh_ohmyzsh_setup.sh ohmyzsh_config.sh terminal_config.sh application.sh language_package.sh custom_funciton.sh 
   ./package.sh $all_accept
   ./zsh_ohmyzsh_setup.sh
   ./ohmyzsh_config.sh $all_accept
