@@ -98,6 +98,8 @@ export PATH="$PYENV_ROOT/bin:$PATH"
 if command -v pyenv 1>/dev/null 2>&1; then
     eval "$(pyenv init -)"
 fi'
+pipenv_Keyword='export PATH=~/.local/bin:$PATH'
+
 case $SHELL in
     *zsh )
     shell=zsh
@@ -132,7 +134,13 @@ fi
 
 Ask_yn "Do you want to install pipenv?"; result=$?
 if [ $result = 1 ]; then
-    pip install pipenv
+    pip install --user pipenv
+    if [ "$(grep -xn "$pipenv_Keyword" $profile)" != "" ]; then
+        Echo_Color g "You have already added pipenv PATH in $profile !!"
+    else
+        # config profile
+        printf "\n# pipenv setting\n$pipenv_Keyword\n" >> $profile
+    fi
 fi
 
 Ask_yn "Do you want to install nvm?"; result=$?
