@@ -93,21 +93,23 @@ function Ask_yn(){
 #====================================================
 # Part 2. Main
 #====================================================
-pyenv_Keyword='export PYENV_ROOT="$HOME/.pyenv"
+pyenv_Keyword='eval "$(pyenv init -)"'
+pyenv_Keyword_login='export PYENV_ROOT="$HOME/.pyenv"
 export PATH="$PYENV_ROOT/bin:$PATH"
-if command -v pyenv 1>/dev/null 2>&1; then
-    eval "$(pyenv init -)"
-fi'
+eval "$(pyenv init --path)"'
+
 pipenv_Keyword='export PATH=~/.local/bin:$PATH'
 
 case $SHELL in
     *zsh )
     shell=zsh
     profile=~/.zshrc
+    login_profile=~/.zprofile
     ;;
     *bash )
     shell=bash
     profile=~/.bashrc
+    login_profile=~/.bash_profile
     ;;
     *ksh )
     shell=ksh
@@ -129,6 +131,13 @@ if [ $result = 1 ]; then
     else
         # config profile
         printf "\n# pyenv setting\n$pyenv_Keyword\n" >> $profile
+    fi
+
+    if [ "$(grep -xn "$pyenv_Keyword_login" $profile_login)" != "" ]; then
+        Echo_Color g "You have already added pyenv config in $profile_login !!"
+    else
+        # config login_profile
+        printf "\n# pyenv setting\n$pyenv_Keyword_login\n" >> $login_profile
     fi
 fi
 
