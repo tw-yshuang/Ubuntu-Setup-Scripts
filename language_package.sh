@@ -133,8 +133,8 @@ if [ $result = 1 ]; then
         printf "\n# pyenv setting\n$pyenv_Keyword\n" >> $profile
     fi
 
-    if [ "$(grep -xn "$pyenv_Keyword_login" $profile_login)" != "" ]; then
-        Echo_Color g "You have already added pyenv config in $profile_login !!"
+    if [ "$(grep -xn "$pyenv_Keyword_login" $login_profile)" != "" ]; then
+        Echo_Color g "You have already added pyenv config in $login_profile !!"
     else
         # config login_profile
         printf "\n# pyenv setting\n$pyenv_Keyword_login\n" >> $login_profile
