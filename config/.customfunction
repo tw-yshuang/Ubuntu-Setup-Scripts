@@ -103,3 +103,47 @@ pipenv_correspond(){
     echo "\e[32mSuccessflly removed all venvs!!\e[0m" 
   fi
 }
+
+# mount/unmount persional crypto_LUKS paratition
+cryp-mount(){
+  local mount=true
+  local mount_root='/mnt/Backup'
+  local paratition_locate=$(lsblk -f | grep crypto | cut -d ' ' -f 1 | cut -c 7-)
+  local help_book="Usage: ys_mount [OPTION]
+
+OPTION:
+  on,  --mount                mount personal partition to the $mount_root.
+  off, --unmount              unmount the personal partition.
+  "
+
+  if [ "$#" -gt 0 ]; then
+    while [ "$#" -gt 0 ]; do
+      case $1 in
+        "-h" | "--help" )
+          echo $help_book
+          return
+        ;;
+        "on" | "--mount" )
+          mount=true
+          shift 1
+        ;;
+        "off" | "--unmount" )
+          mount=false
+          shift 1
+        ;;
+        *)
+          echo "\e[31mWrong command keyword!\e[0m" 
+          return
+        ;;
+      esac
+    done
+  fi
+
+  if $mount; then
+    sudo cryptsetup open /dev/$paratition_locate temp_partition
+    sudo mount /dev/mapper/temp_partition $mount_root
+  else
+    sudo umount $mount_root
+    sudo cryptsetup close temp_partition
+  fi
+}
