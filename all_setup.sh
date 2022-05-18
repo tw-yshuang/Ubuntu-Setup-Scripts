@@ -1,25 +1,26 @@
 #!/usr/bin/env bash
 
 function Echo_Color(){
-    case $1 in
-        r* | R* )
-        COLOR='\e[31m'
-        ;;
-        g* | G* )
-        COLOR='\e[32m'
-        ;;
-        y* | Y* )
-        COLOR='\e[33m'
-        ;;
-        b* | B* )
-        COLOR='\e[34m'
-        ;;
-        *)
-        echo "$COLOR Wrong COLOR keyword!\e[0m" 
-        ;;
+  case $1 in
+    r* | R* )
+    COLOR='\033[0;31m'
+    ;;
+    g* | G* )
+    COLOR='\033[0;32m'
+    ;;
+    y* | Y* )
+    COLOR='\033[0;33m'
+    ;;
+    b* | B* )
+    COLOR='\033[0;34m'
+    ;;
+    *)
+    echo "$COLOR Wrong COLOR keyword!\033[0m" 
+    ;;
     esac
-    echo -e "$COLOR$2\e[0m"
-}
+    echo -e "$COLOR$2\033[0m"
+  }
+
 
 
 all_accept=-y
