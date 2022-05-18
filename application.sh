@@ -49,26 +49,26 @@ fi
 function Echo_Color(){
     case $1 in
         r* | R* )
-        COLOR='\e[31m'
+        COLOR='\033[0;31m'
         ;;
         g* | G* )
-        COLOR='\e[32m'
+        COLOR='\033[0;32m'
         ;;
         y* | Y* )
-        COLOR='\e[33m'
+        COLOR='\033[0;33m'
         ;;
         b* | B* )
-        COLOR='\e[34m'
+        COLOR='\033[0;34m'
         ;;
         *)
-        echo "$COLOR Wrong COLOR keyword!\e[0m" 
+        echo "$COLOR Wrong COLOR keyword!\033[0m" 
         ;;
-    esac
-    echo -e "$COLOR$2\e[0m"
-}
+        esac
+        echo -e "$COLOR$2\033[0m"
+    }
 
 function Ask_yn(){
-    printf "\e[33m$1\e[0m\e[33m [y/n] \e[0m"
+    printf "\033[0;33m$1\033[0m\033[0;33m [y/n] \033[0m"
     if [ $all_accept = 1 ]; then
         echo '-y'
         return 1

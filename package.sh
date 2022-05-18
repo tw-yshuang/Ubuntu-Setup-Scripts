@@ -13,12 +13,12 @@
 #-    -h, --help             print help information.
 #-    -no_git-config         do not customize git.
 #-    -no_vim-config         do not use customize .vimrc config file (from ./config/.vimrc).
+#-    -no_tmux-config        do not use customize .tmux.conf file (from ./config/.tmux.conf).
 #-    -no_chewing            do not install Taiwanese typing method.
 #-    -no_extra-packages     do not install all the extra-packages.
 #-      
 #-    =========== extra package options ===========
 #-    --no_ssh-server        do not install openssh-server.
-#-    --no_screen            do not install screen.
 #-    --no_pip3              do not install python3-pip.
 #-
 #- EXAMPLES
@@ -42,10 +42,10 @@ function show_script_help(){
 all_accept=0
 git_config=1
 vim_config=1
+tmux_config=1
 chewing=1
 extra_packages=1
 ssh_server=1
-screen=1
 pip3=1
 if [ "$#" -gt 0 ]; then
     while [ "$#" -gt 0 ]; do
@@ -70,6 +70,11 @@ if [ "$#" -gt 0 ]; then
                 vim_config=0
                 shift 1
             ;;
+            # Not use customize .tmux.conf file (from ./config/.tmux.conf).
+            "-no_tmux-config" )
+                tmux_config=0
+                shift 1
+            ;;
             # Not install Taiwanese typing method
             "-no_chewing" )
                 chewing=0
@@ -85,11 +90,6 @@ if [ "$#" -gt 0 ]; then
                 ssh_server=0
                 shift 1
             ;;
-            # Not install screen
-            "--no_screen" )
-                screen=0
-                shift 1
-            ;;
             # Not install python3-pip
             "--no_pip3" )
                 pip3=0
@@ -102,31 +102,31 @@ if [ "$#" -gt 0 ]; then
     done
 fi
 declare -A Extra_package_dict
-Extra_package_dict=([openssh-server]=$ssh_server [screen]=$screen [python3-pip]=$pip3)
+Extra_package_dict=([openssh-server]=$ssh_server [python3-pip]=$pip3)
 
 function Echo_Color(){
     case $1 in
         r* | R* )
-        COLOR='\e[31m'
+        COLOR='\033[0;31m'
         ;;
         g* | G* )
-        COLOR='\e[32m'
+        COLOR='\033[0;32m'
         ;;
         y* | Y* )
-        COLOR='\e[33m'
+        COLOR='\033[0;33m'
         ;;
         b* | B* )
-        COLOR='\e[34m'
+        COLOR='\033[0;34m'
         ;;
         *)
-        echo "$COLOR Wrong COLOR keyword!\e[0m" 
+        echo "$COLOR Wrong COLOR keyword!\033[0m" 
         ;;
-    esac
-    echo -e "$COLOR$2\e[0m"
-}
+        esac
+        echo -e "$COLOR$2\033[0m"
+    }
 
 function Ask_yn(){
-    printf "\e[33m$1\e[0m\e[33m [y/n] \e[0m"
+    printf "\033[0;33m$1\033[0m\033[0;33m [y/n] \033[0m"
     if [ $all_accept = 1 ]; then
         echo '-y'
         return 1
@@ -149,7 +149,7 @@ function Ask_yn(){
 #====================================================
 sudo apt update
 sudo apt upgrade
-sudo apt install -y git-all vim curl wget make
+sudo apt install -y git-all vim curl wget make tmux
 
 if [ $git_config = 1 ]; then
     # git: config global usr information
@@ -209,10 +209,18 @@ if [ $git_config = 1 ]; then
 fi
 
 if [ $vim_config = 1 ]; then
-    Ask_yn "Do you want to use customize VIM editor setting? $(Echo_Color r '(If you do this, the old ~/.vimrc will remove it.)')"; result=$?
+    Ask_yn "Do you want to use customized VIM editor setting? $(Echo_Color r '(If you do this, the old ~/.vimrc will remove it.)')"; result=$?
     if [ $result = 1 ]; then
         cp ./config/.vimrc ~/
-        Echo_Color g "Completed VIM editor customize setting"
+        Echo_Color g "Completed VIM editor customized setting"
+    fi
+fi
+
+if [ $tmux_config = 1 ]; then
+    Ask_yn "Do you want to use customized tmux configuration? $(Echo_Color r '(If you do this, the old ~/.tmux.conf will remove it.)')"; result=$?
+    if [ $result = 1 ]; then
+        cp ./config/.tmux.conf ~/
+        Echo_Color g "Completed customized tmux configuration"
     fi
 fi
 
