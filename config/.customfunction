@@ -21,7 +21,7 @@ pipenv_correspond(){
   
   local help_book='Usage: pipenv_correspond [OPTION]\n\nOPTION:
   ls,  --list                list all the corresponding projects_root & venvs
-  uls, --useless             list all the not existing projects_roots that still have correspondenting venvs
+  uls, --useless             list all the not existing projects_roots that still have corresponding venvs
   npr, --no-project-root     hide projects_root
   rm,  --remove              remove all the venvs from command: "ls" or "uls", deafult is use "uls"
   '
