@@ -18,7 +18,7 @@ Every .sh file can independent work.
 If you want to setup all the setting, run:
 
 ```shell
-chomd +x ./all_setup.sh
+chmod +x ./all_setup.sh
 ./all_setup.sh
 ```
 
