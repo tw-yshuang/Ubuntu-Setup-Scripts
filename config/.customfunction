@@ -109,7 +109,7 @@ cryp-mount(){
   local mount=true
   local mount_root='/mnt/Backup'
   local paratition_locate=$(lsblk -f | grep crypto | cut -d ' ' -f 1 | cut -c 7-)
-  local help_book="Usage: ys_mount [OPTION]
+  local help_book="Usage: cryp_mount [OPTION]
 
 OPTION:
   on,  --mount                mount personal partition to the $mount_root.
