@@ -143,7 +143,7 @@ fi
 
 Ask_yn "Do you want to install pipenv?"; result=$?
 if [ $result = 1 ]; then
-    pip install --user pipenv
+    pip3 install --user pipenv
     if [ "$(grep -xn "$pipenv_Keyword" $profile)" != "" ]; then
         Echo_Color g "You have already added pipenv PATH in $profile !!"
     else
