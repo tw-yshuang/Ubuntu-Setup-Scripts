@@ -35,7 +35,8 @@ if [[ $SHELL != *zsh ]]; then
 else
   chmod +x terminal_config.sh application.sh language_package.sh custom_function.sh 
   ./terminal_config.sh $all_accept
-  ./application.sh $all_accept
+  # ./application.sh $all_accept
+  ./application.sh
   ./language_package.sh $all_accept
   ./custom_function.sh $all_accept
   Echo_Color g "All Done~~~"
