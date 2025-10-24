@@ -116,10 +116,28 @@ if [ $result = 1 ]; then
     cp ./config/.p10k.zsh ~/
 fi
 
+# if powerlevel10k is not installed, use agnoster theme
+if [ -z "${Ohmyzsh_config_dict[powerlevel10k]}" ]; then
+    sed -i 's!^ZSH_THEME=.*!ZSH_THEME="agnoster"!' ~/.zshrc
+fi
+
 # use sed to edit ~/.zshrc
 if [ $write_plugins = 1 ]; then
     sed -i "s/^plugins.*/plugins=(git$Ohmyzsh_config)/" ~/.zshrc
     source ~/.zshrc
+fi
+
+# set system LANG to C.UTF-8 (POSIX compliant)
+lang_help='# set system LANG to C.UTF-8 (POSIX compliant)'
+lang_cmd='export LANG="C.UTF-8"'
+if [ ! -f ~/.zprofile -o "$(grep "${lang_cmd}" ~/.zprofile)" = "" ]; then
+    printf "\n$lang_help\n$lang_cmd\n" >> ~/.zprofile
+fi
+
+# make zshrc load when zlogin
+zshrc_load_cmd='[[ -f ~/.zshrc ]] && source ~/.zshrc'
+if [ ! -f ~/.zlogin -o "$(grep "${zshrc_load_cmd}" ~/.zlogin)" = "" ]; then
+    printf "\n$zshrc_load_cmd\n" >> ~/.zlogin
 fi
 
 Echo_Color g "Done!! $0"

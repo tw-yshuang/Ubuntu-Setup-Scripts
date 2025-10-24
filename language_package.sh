@@ -116,9 +116,11 @@ case $SHELL in
     profile=~/.profile
     ;;
     * )
-    Echo_Color r "Unknow shell, need to manually add pyenv config on your shell profile!!"
+    Echo_Color r "Unknown shell, need to manually add pyenv config on your shell profile!!"
     ;;
 esac
+
+sudo apt-get install python3-pip
 
 Ask_yn "Do you want to install pyenv"; result=$?
 if [ $result = 1 ]; then
@@ -141,9 +143,9 @@ if [ $result = 1 ]; then
     fi
 fi
 
-Ask_yn "Do you want  to install pipenv?"; result=$?
+Ask_yn "Do you want to install pipenv?"; result=$?
 if [ $result = 1 ]; then
-    pip3 install --user pipenv
+    pip3 install  --user --no-cache-dir pipenv
     if [ "$(grep -xn "$pipenv_Keyword" $profile)" != "" ]; then
         Echo_Color g "You have already added pipenv PATH in $profile !!"
     else
