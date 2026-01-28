@@ -221,6 +221,20 @@ if [ $tmux_config = 1 ]; then
     if [ $result = 1 ]; then
         cp ./config/.tmux.conf ~/
         Echo_Color g "Completed customized tmux configuration"
+        
+        TPM_DIR="$HOME/.tmux/plugins/tpm"
+        if [ ! -d "$TPM_DIR" ]; then
+            Echo_Color y "Installing TPM (Tmux Plugin Manager)..."
+            git clone https://github.com/tmux-plugins/tpm "$TPM_DIR"
+            if [ $? -eq 0 ]; then
+                Echo_Color g "TPM installed successfully at $TPM_DIR"
+                Echo_Color y "Note: After starting tmux, press 'prefix + I' (Ctrl-a + Shift-i) to install plugins"
+            else
+                Echo_Color r "Failed to install TPM"
+            fi
+        else
+            Echo_Color y "TPM is already installed at $TPM_DIR"
+        fi
     fi
 fi
 
